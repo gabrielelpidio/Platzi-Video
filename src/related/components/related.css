@@ -1,0 +1,14 @@
+.Related{
+    width: 300px;
+    padding: 0 15px;
+    color: white;
+}
+.FriendsList{
+    height: 60%;
+    overflow: auto;
+}
+
+.Playlists{
+    height: 32vh;
+    overflow: auto;
+}

@@ -1,0 +1,58 @@
+{
+  "user": {
+    "username" : "@gabrielelpidio",
+    "picture" : "../../images/user.png"
+  },
+  "friends" : [
+    {
+      "name": "Victoria Clark",
+      "picture": "https://randomuser.me/api/portraits/women/33.jpg",
+      "id":"1"
+    },
+    {
+      "name": "Lee Rivera",
+      "picture": "https://randomuser.me/api/portraits/men/90.jpg",
+      "id":"2"
+    },
+    {
+      "name": "Pamela Little",
+      "picture": "https://randomuser.me/api/portraits/women/9.jpg",
+      "id":"3"
+    },
+    {
+      "name": "Franklin Burton",
+      "picture": "https://randomuser.me/api/portraits/men/16.jpg",
+      "id":"4"
+    },
+    {
+      "name": "Nina Harrison",
+      "picture": "https://randomuser.me/api/portraits/women/94.jpg",
+      "id":"5"
+    },
+    {
+      "name": "Lily Snyder",
+      "picture": "https://randomuser.me/api/portraits/women/48.jpg",
+      "id":"6"
+    },
+    {
+      "name": "David Ellis",
+      "picture": "https://randomuser.me/api/portraits/men/57.jpg",
+      "id":"7"
+    },
+    {
+      "name": "Judith Howard",
+      "picture": "https://randomuser.me/api/portraits/women/4.jpg",
+      "id":"8"
+    },
+    {
+      "name": "Marc Warren",
+      "picture": "https://randomuser.me/api/portraits/men/76.jpg",
+      "id":"9"
+    },
+    {
+      "name": "Beatrice Dunn",
+      "picture": "https://randomuser.me/api/portraits/women/22.jpg",
+      "id":"10"
+    }
+  ]
+}

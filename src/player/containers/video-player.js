@@ -1,0 +1,157 @@
+import React, { Component } from "react";
+import VideoPlayerLayout from "../components/video-player-layout";
+import Video from "./video";
+import Title from "../components/title";
+import PlayPause from "../components/play-pause";
+import Timer from "../components/timer";
+import Controls from "../components/video-player-controls";
+import { formattedTime, isFullScreen, requestFullScreen, exitFullScreen } from "../../helpers/utilities";
+import ProgressBar from "../components/progress-bar";
+import Spinner from "../components/spinner";
+import Volume from "../components/volume"
+import FullScreen from "../components/full-screen";
+import { connect } from 'react-redux'
+
+
+
+class VideoPlayer extends Component {
+  state = {
+    pause: true,
+    duration: 0,
+    currentTime: 0,
+    loading: false,
+    lastVolume: 0,
+    volume: .5
+  };
+  togglePlay = event => {
+    this.setState({
+      pause: !this.state.pause
+    });
+  };
+  componentDidMount = () => {
+    this.setState({
+      pause: !this.props.autoplay
+    });
+  };
+  handleTimeUpdate = event => {
+    this.setState({
+      currentTime: this.video.currentTime
+    })
+  }
+  handleLoadedMetadata = event => {
+    this.video = event.target;
+    this.setState({
+      duration: this.video.duration
+    });
+  };
+
+  handleProgressChange = event =>{
+    this.video.currentTime = event.target.value
+  }
+
+  handleSeeking = event => {
+    this.setState({
+      loading:true
+    })
+  }
+
+  handleSeeked = event => {
+    this.setState({
+      loading:false
+    })
+  }
+
+  handleVolumeChange = event =>{
+    this.video.volume = event.target.value
+    this.setState({
+      volume: this.video.volume
+    })
+  }
+
+  handleMuteClick = event =>{
+    
+    if (!this.video.volume == 0){
+      this.setState({          
+          lastVolume: this.video.volume
+      })
+      this.video.volume = 0
+      
+      this.setState({
+        volume: this.video.volume
+      })
+    }
+    else{
+      this.video.volume = this.state.lastVolume
+      this.setState({
+        volume: this.video.volume
+      })
+    }
+    
+  }
+
+  handleFullScreenClick = event => {
+    if(!isFullScreen()){
+      requestFullScreen(this.player)
+    }
+    else{
+      exitFullScreen( this.player )
+    }
+  }
+
+  setRef = element =>{
+    this.player = element
+  }
+
+  render() {
+    return (
+      <VideoPlayerLayout
+        setRef={this.setRef}
+      >
+        <Title title={this.props.media.get('title')} />
+        <Controls>
+          <PlayPause
+          pause={this.state.pause} 
+          handleClick={this.togglePlay}
+          />
+          <Timer 
+          duration={formattedTime(this.state.duration)} 
+          currentTime={formattedTime(this.state.currentTime)}
+          />
+          <ProgressBar  
+          duration={this.state.duration}  
+          value={this.state.currentTime} 
+          handleProgressChange={this.handleProgressChange}
+          />
+          <Volume
+            handleVolumeChange={this.handleVolumeChange}
+            handleMuteClick={this.handleMuteClick}
+            value={this.state.volume}
+          />
+          <FullScreen
+          handleFullScreenClick={this.handleFullScreenClick}
+          />
+        </Controls>
+        <Spinner
+          active={this.state.loading}
+        />
+        <Video
+          autoplay={this.props.autoplay}
+          pause={this.state.pause}
+          handleLoadedMetadata={this.handleLoadedMetadata}
+          handleTimeUpdate={this.handleTimeUpdate}
+          handleSeeking={this.handleSeeking}
+          handleSeeked={this.handleSeeked}
+          src={this.props.media.get('src')}
+        />
+      </VideoPlayerLayout>
+    );
+  }
+}
+
+const mapStateToProps = (state, props) =>(
+  {
+    media: state.getIn(['data', 'entities', 'media', props.id])
+  }
+)
+
+export default connect(mapStateToProps)(VideoPlayer);
